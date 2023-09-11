@@ -24,10 +24,7 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for android - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return android;
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
@@ -52,14 +49,21 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyAyN7Y0bSvQBz46hPnU1YERTaRLd9KRwFM',
+    appId: '1:10631672293:android:583a60258f8999898dbf0c',
+    messagingSenderId: '10631672293',
+    projectId: 'flutter-accounting-app-v2',
+    storageBucket: 'flutter-accounting-app-v2.appspot.com',
+  );
+
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCY-W-AE5FU-a2f_0_bZ4r-xWvaZLFlRJc',
     appId: '1:10631672293:ios:03e2cf0191f586c78dbf0c',
     messagingSenderId: '10631672293',
     projectId: 'flutter-accounting-app-v2',
     storageBucket: 'flutter-accounting-app-v2.appspot.com',
-    iosClientId:
-        '10631672293-mi6ne4r8sl4dbt2qa6bnlck5lmsgn4ql.apps.googleusercontent.com',
+    iosClientId: '10631672293-mi6ne4r8sl4dbt2qa6bnlck5lmsgn4ql.apps.googleusercontent.com',
     iosBundleId: 'com.example.flutterAccountingAppV2',
   );
 }
