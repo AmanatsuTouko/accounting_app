@@ -12,22 +12,6 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('チャット'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () async {
-              // ログアウト処理
-              // 内部で保持しているログイン情報等が初期化される
-              // （現時点ではログアウト時はこの処理を呼び出せばOKと、思うぐらいで大丈夫です）
-              await FirebaseAuth.instance.signOut();
-              // ログイン画面に遷移＋チャット画面を破棄
-              await Navigator.pushReplacementNamed(context, '/login');
-            },
-          ),
-        ],
-      ),
       body: Column(
         children: [
           Container(
@@ -81,13 +65,6 @@ class ChatPage extends StatelessWidget {
             ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () async {
-          // 投稿画面に遷移
-          await Navigator.pushNamed(context, '/post');
-        },
       ),
     );
   }

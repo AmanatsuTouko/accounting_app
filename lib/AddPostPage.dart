@@ -64,7 +64,7 @@ class _AddPostPageState extends State<AddPostPage> {
                       'date': date
                     });
                     // 1つ前の画面に戻る
-                    Navigator.of(context).pop();
+                    // Navigator.of(context).pop();
                   },
                 ),
               )

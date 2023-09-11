@@ -6,6 +6,7 @@ import 'ChatPage.dart';
 import 'LoginPage.dart';
 import 'FirstPage.dart';
 import 'SecondPage.dart';
+import 'MainScreen.dart';
 import 'UserData.dart';
 
 // FireBase
@@ -37,11 +38,12 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => LoginPage(),
-        '/first': (context) => FirstPage(),
-        '/second': (context) => SecondPage(),
         '/login': (context) => LoginPage(),
+        '/main' : (context) => MainScreen(),
         '/chat': (context) => ChatPage(),
         '/post': (context) => AddPostPage(),
+        '/first': (context) => FirstPage(),
+        '/second': (context) => SecondPage(),
       },
     );
   }

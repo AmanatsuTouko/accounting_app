@@ -67,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                       await UserData.setUserData(
                           email: email, password: password, user: result.user!);
                       // チャット画面に遷移＋ログイン画面を破棄
-                      await Navigator.pushReplacementNamed(context, '/chat');
+                      await Navigator.pushReplacementNamed(context, '/main');
                     } catch (e) {
                       // ユーザー登録に失敗した場合
                       setState(() {
@@ -96,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                       await UserData.setUserData(
                           email: email, password: password, user: result.user!);
                       // チャット画面に遷移＋ログイン画面を破棄
-                      await Navigator.pushReplacementNamed(context, '/chat');
+                      await Navigator.pushReplacementNamed(context, '/main');
                     } catch (e) {
                       // ログインに失敗した場合
                       setState(() {
