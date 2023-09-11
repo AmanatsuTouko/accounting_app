@@ -12,6 +12,7 @@ import 'UserData.dart';
 // FireBase
 import 'firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
   // FireBaseの初期化処理
@@ -34,10 +35,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      home: LoginCheck(),
       // ルーティングの定義
       initialRoute: '/',
       routes: {
-        '/': (context) => LoginPage(),
         '/login': (context) => LoginPage(),
         '/main' : (context) => MainScreen(),
         '/chat': (context) => ChatPage(),
@@ -45,6 +46,48 @@ class MyApp extends StatelessWidget {
         '/first': (context) => FirstPage(),
         '/second': (context) => SecondPage(),
       },
+    );
+  }
+}
+
+// ログイン状態のチェックと遷移を行う
+class LoginCheck extends StatefulWidget{
+  LoginCheck({Key, key}) : super(key: key);
+
+  @override
+  _LoginCheckState createState() => _LoginCheckState();
+}
+
+class _LoginCheckState extends State<LoginCheck>{
+  //ログイン状態のチェック(非同期で行う)
+  void checkUser() async{
+    final currentUser = await FirebaseAuth.instance.currentUser;
+    if(currentUser == null){
+      // 未ログインの時
+      await Navigator.pushReplacementNamed(context,"/login");
+    }else{
+      // ログイン済みの時
+      // Userデータをstaticに取得できるように保存しておく
+      await UserData.setUserData(user: currentUser);
+      await Navigator.pushReplacementNamed(context, "/main");
+    }
+  }
+
+  @override
+  void initState(){
+    super.initState();
+    checkUser();
+  }
+  //ログイン状態のチェック時はこの画面が表示される
+  //チェック終了後にホーム or ログインページに遷移する
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Container(
+          child: Text("Loading..."),
+        ),
+      ),
     );
   }
 }

@@ -18,13 +18,11 @@ class AddPostPage extends StatefulWidget {
 class _AddPostPageState extends State<AddPostPage> {
   // 入力した投稿メッセージ
   String messageText = '';
+  final _editController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('チャット投稿'),
-      ),
       body: Center(
         child: Container(
           padding: EdgeInsets.all(32),
@@ -33,11 +31,11 @@ class _AddPostPageState extends State<AddPostPage> {
             children: <Widget>[
               // 投稿メッセージ入力
               TextFormField(
+                controller: _editController,
                 decoration: InputDecoration(labelText: '投稿メッセージ'),
                 // 複数行のテキスト入力
                 keyboardType: TextInputType.multiline,
-                // 最大3行
-                maxLines: 3,
+                maxLines: 1,
                 onChanged: (String value) {
                   setState(() {
                     messageText = value;
@@ -48,10 +46,17 @@ class _AddPostPageState extends State<AddPostPage> {
               Container(
                 width: double.infinity,
                 child: ElevatedButton(
-                  child: Text('投稿'),
+                  child: Text('登録'),
                   onPressed: () async {
-                    final date =
-                        DateTime.now().toLocal().toIso8601String(); // 現在の日時
+
+                    // 金額が無記述の場合は何もしない
+                    if(messageText == '') {
+                      // キーボードを閉じる
+                      primaryFocus?.unfocus();
+                      return;
+                    }
+
+                    final date = DateTime.now().toLocal().toIso8601String(); // 現在の日時
                     final email = widget.user.email; // AddPostPage のデータを参照
 
                     // 投稿メッセージ用ドキュメント作成
@@ -63,8 +68,12 @@ class _AddPostPageState extends State<AddPostPage> {
                       'email': email,
                       'date': date
                     });
-                    // 1つ前の画面に戻る
-                    // Navigator.of(context).pop();
+
+                    // 金額を消す
+                    _editController.clear();
+
+                    // キーボードを閉じる
+                    primaryFocus?.unfocus();
                   },
                 ),
               )

@@ -64,8 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                       );
                       // ユーザー登録に成功した場合
                       // ユーザーデータの保存
-                      await UserData.setUserData(
-                          email: email, password: password, user: result.user!);
+                      await UserData.setUserData(user: result.user!);
                       // チャット画面に遷移＋ログイン画面を破棄
                       await Navigator.pushReplacementNamed(context, '/main');
                     } catch (e) {
@@ -93,8 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                       );
                       // ログインに成功した場合
                       // ユーザーデータの保存
-                      await UserData.setUserData(
-                          email: email, password: password, user: result.user!);
+                      await UserData.setUserData(user: result.user!);
                       // チャット画面に遷移＋ログイン画面を破棄
                       await Navigator.pushReplacementNamed(context, '/main');
                     } catch (e) {
