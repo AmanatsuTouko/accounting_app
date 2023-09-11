@@ -1,4 +1,4 @@
-# flutter_accounting_app_v2
+# accounting_app (Flutter)
 
 A new Flutter project.
 
