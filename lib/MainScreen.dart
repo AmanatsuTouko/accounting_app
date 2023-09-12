@@ -146,6 +146,6 @@ class _MainScreenState extends State<MainScreen> {
     // ログアウト処理 内部で保持しているログイン情報等が初期化される
     await FirebaseAuth.instance.signOut();
     // ログイン画面に遷移
-    await Navigator.pushReplacementNamed(context, '/');
+    await Navigator.pushReplacementNamed(context, '/choose');
   }
 }

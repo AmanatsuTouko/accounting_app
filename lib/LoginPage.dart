@@ -49,34 +49,6 @@ class _LoginPageState extends State<LoginPage> {
                 child: Text(infoText),
               ),
 
-              // ユーザー登録
-              Container(
-                width: double.infinity,
-                child: ElevatedButton(
-                  child: Text('ユーザー登録'),
-                  onPressed: () async {
-                    try {
-                      // メール/パスワードでユーザー登録
-                      final FirebaseAuth auth = FirebaseAuth.instance;
-                      final result = await auth.createUserWithEmailAndPassword(
-                        email: email,
-                        password: password,
-                      );
-                      // ユーザー登録に成功した場合
-                      // ユーザーデータの保存
-                      await UserData.setUserData(user: result.user!);
-                      // チャット画面に遷移＋ログイン画面を破棄
-                      await Navigator.pushReplacementNamed(context, '/main');
-                    } catch (e) {
-                      // ユーザー登録に失敗した場合
-                      setState(() {
-                        infoText = "登録に失敗しました：${e.toString()}";
-                      });
-                    }
-                  },
-                ),
-              ),
-
               // ログインボタン
               Container(
                 width: double.infinity,

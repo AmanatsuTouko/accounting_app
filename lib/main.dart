@@ -1,11 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'AddPostPage.dart';
 import 'ChatPage.dart';
+import 'ChooseCreateAccountOrLogin.dart';
+import 'CreateAccountPage.dart';
 import 'LoginPage.dart';
-import 'FirstPage.dart';
-import 'SecondPage.dart';
 import 'MainScreen.dart';
 import 'UserData.dart';
 
@@ -39,12 +40,13 @@ class MyApp extends StatelessWidget {
       // ルーティングの定義
       initialRoute: '/',
       routes: {
+        '/choose': (context) => ChooseCreateAccountOrLogin(),
+        '/create-account': (context) => CreateAccountPage(),
         '/login': (context) => LoginPage(),
         '/main' : (context) => MainScreen(),
         '/chat': (context) => ChatPage(),
         '/post': (context) => AddPostPage(),
-        '/first': (context) => FirstPage(),
-        '/second': (context) => SecondPage(),
+
       },
     );
   }
@@ -64,11 +66,31 @@ class _LoginCheckState extends State<LoginCheck>{
     final currentUser = await FirebaseAuth.instance.currentUser;
     if(currentUser == null){
       // 未ログインの時
-      await Navigator.pushReplacementNamed(context,"/login");
+      await Navigator.pushReplacementNamed(context,"/choose");
     }else{
       // ログイン済みの時
       // Userデータをstaticに取得できるように保存しておく
       await UserData.setUserData(user: currentUser);
+
+      // firestoreにあるusersコレクションを取得してローカルに保存しておく
+      await FirebaseFirestore.instance.collection('users').get().then((QuerySnapshot querySnapshot) {
+        querySnapshot.docs.forEach((doc) async {
+          // デバッグ用に全ユーザーのデータを出力する
+          print(doc.id); print(doc["email"]); print(doc["username"]);
+          // 自身のuuidを取得して保存しておく
+          if(doc["email"] == currentUser.email){
+            UserData.setUUID(uuid: doc.id);
+          }
+          // 後で参照できるようにイベントスペースの参加者データを保存しておく
+          await UserData.addEventUser(eventUser: new EventUser(doc.id, doc["email"], doc["username"]));
+        });
+      });
+
+      // uuidからusernameを取得するサンプル
+      // print(UserData.getUserNameFromEventUserUUID(UserData.getEventUserList()[0].id));
+      // print(UserData.getUserNameFromEventUserUUID(UserData.getEventUserList()[1].id));
+
+      // mainScreenに移動してこの画面を破棄する
       await Navigator.pushReplacementNamed(context, "/main");
     }
   }
