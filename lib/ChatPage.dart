@@ -14,10 +14,6 @@ class ChatPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          Container(
-            padding: EdgeInsets.all(8),
-            child: Text('ログイン情報：${user.email}'),
-          ),
           Expanded(
             // StreamBuilder
             // 非同期処理の結果を元にWidgetを作れる
