@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 
 // グローバルにFireBaseに用いたデータを管理するため、staticなクラスを定義する
 // firebaseのAuthに接続するためのUserインスタンスを保存するためのクラス
