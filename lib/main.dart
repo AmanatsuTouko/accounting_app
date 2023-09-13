@@ -9,6 +9,7 @@ import 'CreateAccountPage.dart';
 import 'LoginPage.dart';
 import 'MainScreen.dart';
 import 'UserData.dart';
+import 'LiquidationPage.dart';
 
 // FireBase
 import 'firebase_options.dart';
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
         '/main' : (context) => MainScreen(),
         '/chat': (context) => ChatPage(),
         '/post': (context) => AddPostPage(),
-
+        'liquidation': (context) => LiquidationPage(),
       },
     );
   }

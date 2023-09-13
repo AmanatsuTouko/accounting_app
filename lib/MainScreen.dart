@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_accounting_app_v2/LiquidationPage.dart';
 import 'AddPostPage.dart';
 import 'ChatPage.dart';
 import 'UserData.dart';
@@ -87,11 +88,9 @@ class _MainScreenState extends State<MainScreen> {
             children: [
               AddPostPage(),
               ChatPage(),
+              LiquidationPage(),
               const Center(
-                child: Text('清算した金額を表示'),
-              ),
-              const Center(
-                child: Text('設定を表示'),
+                child: Text('設定を表示(作成中)'),
               ),
             ],
           )
