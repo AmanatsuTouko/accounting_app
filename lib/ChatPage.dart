@@ -37,7 +37,7 @@ class ChatPage extends StatelessWidget {
                     children: documents.map((document) {
                       return Card(
                         child: ListTile(
-                          title: Text(document['text']),
+                          title: Text(document['money'].toString()),
                           subtitle: Text(document['email']),
                           // 自分の投稿メッセージの場合は削除ボタンを表示
                           trailing: document['email'] == user.email
