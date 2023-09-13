@@ -25,9 +25,7 @@ class _AddPostPageState extends State<AddPostPage> {
   List<EventUser> _eventUserList = UserData.getEventUserList();
   // 支払ったユーザーとして、何番目のユーザーを選択したかのindex
   int _payerUserIndex = -1;
-
-  bool _isChecked = false;
-  // List<bool> _isBepaidUserList = []..length = UserData.getEventUserList().length;
+  // 支払われたユーザーがチェックされた時に保存しておくList
   final List<bool> _isBepaidUserList = List.generate(
       UserData.getEventUserList().length, (bool) => false);
 
@@ -110,9 +108,26 @@ class _AddPostPageState extends State<AddPostPage> {
       primaryFocus?.unfocus();
       return;
     }
+    // 支払ったユーザーが未選択の場合は何もしない
+    if(_payerUserIndex == -1) return;
+    // 支払われたユーザーが未選択の場合も何もしない
+    bool isExistBepaid = false;
+    for(int i=0; i<_isBepaidUserList.length; i++){
+      if(_isBepaidUserList[i] == true) {
+        isExistBepaid = true;
+        break;
+       }
+    }
+    if(!isExistBepaid) return;
 
     final date = DateTime.now().toLocal().toIso8601String(); // 現在の日時
     final email = widget.user.email; // AddPostPage のデータを参照
+
+    // 支払われたユーザーのidを纏めたリストを作成する
+    List<String> bepaidUserUUIDs = [];
+    for(int i=0; i<_isBepaidUserList.length; i++){
+      if(_isBepaidUserList[i] == true) bepaidUserUUIDs.add(_eventUserList[i].id);
+    }
 
     // 投稿メッセージ用ドキュメント作成
     await FirebaseFirestore.instance
@@ -122,10 +137,20 @@ class _AddPostPageState extends State<AddPostPage> {
       'money': _inputMoney,
       'email': email,
       'date': date,
+      'payer': _eventUserList[_payerUserIndex].id,
+      'be-paid': bepaidUserUUIDs,
     });
 
-    // 金額を消す
-    _editController.clear();
+    setState(() {
+      // 金額を消す
+      _editController.clear();
+      // 支払った人(radio button)をリセットする
+      _payerUserIndex = -1;
+      // 支払われた人(checkbox)をリセットする
+      for(int i=0; i<_isBepaidUserList.length; i++){
+        _isBepaidUserList[i] = false;
+      }
+    });
 
     // キーボードを閉じる
     primaryFocus?.unfocus();
