@@ -26,8 +26,14 @@ class UserData {
     return UserData._uuid;
   }
 
-  // firestoreの他のユーザーを追加する
+  // firestoreの他のユーザーを再登録する際に、一度すべて削除できるようにする
+  static Future deleteEventUser() async {
+    UserData._eventUserList.clear();
+    UserData._eventUser_UUIDUserNamePares.clear();
+  }
+  // firestoreの他のユーザーを追加するs
   static Future addEventUser({required EventUser eventUser}) async {
+    await UserData.deleteEventUser();
     // Listに追加する
     UserData._eventUserList.add(eventUser);
     // uuidからusernameを後で参照できるように辞書登録する

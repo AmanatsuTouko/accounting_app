@@ -105,6 +105,23 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
         'username': username,
       });
 
+      // Userデータをstaticに取得できるように保存しておく
+      final currentUser = await FirebaseAuth.instance.currentUser;
+      if(currentUser != null) await UserData.setUserData(user: currentUser);
+      // firestoreにあるusersコレクションを取得してローカルに保存しておく
+      await FirebaseFirestore.instance.collection('users').get().then((QuerySnapshot querySnapshot) {
+        querySnapshot.docs.forEach((doc) async {
+          // デバッグ用に全ユーザーのデータを出力する
+          print(doc.id); print(doc["email"]); print(doc["username"]);
+          // 自身のuuidを取得して保存しておく
+          if(currentUser!=null && doc["email"] == currentUser.email){
+            UserData.setUUID(uuid: doc.id);
+          }
+          // 後で参照できるようにイベントスペースの参加者データを保存しておく
+          await UserData.addEventUser(eventUser: new EventUser(doc.id, doc["email"], doc["username"]));
+        });
+      });
+
       // チャット画面に遷移＋ログイン画面を破棄
       await Navigator.pushReplacementNamed(context, '/main');
     } catch (e) {
