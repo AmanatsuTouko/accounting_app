@@ -4,7 +4,7 @@ This is an accounting app for travel. You can record split bills when traveling 
 
 # Example of Use
 
-![example_use](https://github.com/AmanatsuTouko/accounting_app/assets/88881947/ea8d4740-1c66-4510-891a-12a53edbe696)
+![example_use](https://github.com/AmanatsuTouko/accounting_app/assets/88881947/af0b6d1f-bbff-4322-b44e-caf67053eca2)
 
 If you register the person who paid and the person who was paid, the amount paid will be displayed.
 
