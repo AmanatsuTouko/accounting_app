@@ -8,6 +8,8 @@ This is an accounting app for travel. You can record split bills when traveling 
 
 If you register the person who paid and the person who was paid, the amount paid will be displayed.
 
+https://github.com/AmanatsuTouko/accounting_app/assets/88881947/fb889980-5346-43f6-a91b-d0ebfd0c785e
+
 # How to Use
 
 This app uses firebase Auth authentication and firestore.
